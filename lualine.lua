@@ -65,9 +65,8 @@ local location = {
 	end,
 }
 
-
 local spaces = function()
-	return "spcs: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
 local filename = {
@@ -83,7 +82,7 @@ local filename = {
 		if not (str == "n") then
 			return "[~\\"..str.."]"
 		else
-			return "[No Name...]";
+			return "[No Name]";
 		end
 	end,
 }
@@ -115,6 +114,13 @@ local progress = {
 	end,
 }
 
+local encoding = {
+	"encoding",
+	fmt = function(str)
+		return "(" .. string.upper(str) .. ")"
+	end,
+}
+
 --[[ local buffers = {
 	"buffers",
 	mode = 0,
@@ -140,7 +146,7 @@ lualine.setup({
 		lualine_b = { mode },
 		lualine_c = { filename, filetype, progress },
 		lualine_x = { diagnostics },
-		lualine_y = { spaces, "encoding", fileformat },
+		lualine_y = { spaces, encoding, fileformat },
 		-- lualine_y = {},
 		lualine_z = { location },
 	},
