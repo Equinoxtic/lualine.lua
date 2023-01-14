@@ -39,7 +39,11 @@ local filetype = {
 	icon = nil,
 	fmt = function (str)
 		if not (str == nil or str == "") then
-			return "(." .. str .. " file)"
+			if not (str == "markdown") then
+				return "(." .. str .. " file)"
+			else
+				return "(.md file)"
+			end
 		else
 			return "(Open a file with \":e\")"
 		end
@@ -69,6 +73,10 @@ local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
+local function starts_with(str, start)
+	return str:sub(1, #start) == start
+end
+
 local filename = {
 	"filename",
 	symbols = {
@@ -80,7 +88,11 @@ local filename = {
 	path = 1,
 	fmt = function(str)
 		if not (str == "n") then
-			return "[~\\"..str.."]"
+			if not (starts_with(str, "~\\")) then
+				return "[~\\"..str.."]"
+			else
+				return "["..str.."]"
+			end
 		else
 			return "[No Name]";
 		end
